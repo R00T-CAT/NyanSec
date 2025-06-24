@@ -2,82 +2,316 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>R00T-CAT | GitHub Portfolio</title>
+  <title>NYANSEC_OS</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0d1117;
-      color: #c9d1d9;
+      background-color: #000;
+      color: #00ff00;
+      font-family: monospace;
       margin: 0;
       padding: 0;
     }
-    header {
-      background-color: #161b22;
-      text-align: center;
-      padding: 2rem 1rem;
+
+    #terminal, #plain {
+      padding: 20px;
     }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
+
+    .prompt-line {
+      display: flex;
     }
-    header p {
-      font-size: 1.2rem;
-      color: #8b949e;
+
+    .prompt {
+      margin-right: 5px;
     }
-    section {
-      padding: 2rem;
-      max-width: 800px;
-      margin: 0 auto;
+
+    input {
+      background: none;
+      border: none;
+      color: #00ff00;
+      font: inherit;
+      outline: none;
+      width: 100%;
     }
-    .github-link {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background-color: #238636;
+
+    .output-line {
+      margin-bottom: 5px;
+    }
+
+    a {
+      color: #00ff00;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: #00cc00;
+    }
+
+    #plain {
+      display: none;
+      background-color: #fff;
+      color: #000;
+      font-family: sans-serif;
+    }
+
+    #plain h1 {
+      font-size: 24px;
+    }
+
+    .button {
+      margin: 5px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #007700;
       color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
     }
-    .github-link:hover {
-      background-color: #2ea043;
+
+    .button:hover {
+      background-color: #005500;
     }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: #161b22;
-      color: #8b949e;
+
+    #toggleBtn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      background: #444;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 4px;
+      display: none;
+    }
+
+    #transition-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      color: #00ff00;
+      font-family: monospace;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 2000;
+      padding: 20px;
+      white-space: pre-wrap;
+    }
+
+    .error {
+      color: red;
     }
   </style>
 </head>
 <body>
+  <button id="toggleBtn">Switch to Plain Mode</button>
 
-  <header>
+  <!-- Transition Overlay -->
+  <div id="transition-screen"></div>
+
+  <!-- Terminal Mode -->
+  <div id="terminal" style="display: none;">
+    <div class="output-line">Welcome to R00T-CAT's terminal. Type <b>help</b> to begin.</div>
+  </div>
+
+  <!-- Plain Mode -->
+  <div id="plain">
     <h1>R00T-CAT</h1>
-    <p>Open Source Enthusiast | Developer | Cybersecurity Curious</p>
-    <a href="https://github.com/R00T-CAT" class="github-link" target="_blank">Visit My GitHub</a>
-  </header>
+    <button class="button" onclick="showPlainSection('about')">About</button>
+    <button class="button" onclick="showPlainSection('projects')">Projects</button>
+    <button class="button" onclick="showPlainSection('contact')">Contact</button>
+    <div id="plain-output" style="margin-top: 20px;"></div>
+  </div>
 
-  <section>
-    <h2>About Me</h2>
-    <p>
-      Welcome to my personal page! I'm <strong>R00T-CAT</strong>, a tech enthusiast focused on open-source software, security research, and creative coding. I use GitHub as a platform to collaborate, contribute, and share code with the community.
-    </p>
+  <script>
+    const terminal = document.getElementById('terminal');
+    const plain = document.getElementById('plain');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const plainOutput = document.getElementById('plain-output');
+    const transitionScreen = document.getElementById('transition-screen');
 
-    <h2>Highlighted Projects</h2>
-    <ul>
-      <li> <strong>Security Tools</strong> – Small utilities and scripts for penetration testing and network analysis.</li>
-      <li> <strong>Machine Learning Experiments</strong> – Explorations in Python and data science.</li>
-      <li> <strong>Dev Tools</strong> – Useful scripts and automation tools for developers.</li>
-    </ul>
+    const commands = {
+      help: `Available commands:
+  - help -> Show available commands
+  - about -> About me
+  - projects -> View my projects
+  - contact -> Contact info
+  - clear -> Clear the terminal
+  - pet -> Pet the kitty`,
+      about: `Hi nya, I'm R00T-CAT — a Coder that codes.`,
+	  pet: 'Purr~ thanks nya',
+      projects: `1. <a href="https://null" target="_blank">Under Catstruction</a>,
+      contact: `Email: <a href="mailto:root.cat.sec@gmail.com">jane.doe@example.com</a>
+GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com/janedoe</a>`,
+      clear: ''
+    };
 
-    <p>Check out my repositories to see what I'm currently building or exploring!</p>
-  </section>
+    let history = [];
+    let historyIndex = -1;
 
-  <footer>
-    &copy; 2025 R00T-CAT
-  </footer>
+    function createPrompt() {
+      const promptLine = document.createElement('div');
+      promptLine.className = 'prompt-line';
 
+      const prompt = document.createElement('span');
+      prompt.className = 'prompt';
+      prompt.textContent = '$';
+
+      const input = document.createElement('input');
+      input.autofocus = true;
+
+      promptLine.appendChild(prompt);
+      promptLine.appendChild(input);
+      terminal.appendChild(promptLine);
+      input.focus();
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const command = input.value.trim();
+          terminal.removeChild(promptLine);
+          runCommand(command);
+        } else if (e.key === 'ArrowUp') {
+          if (history.length > 0 && historyIndex > 0) {
+            historyIndex--;
+            input.value = history[historyIndex];
+          }
+        } else if (e.key === 'ArrowDown') {
+          if (history.length > 0 && historyIndex < history.length - 1) {
+            historyIndex++;
+            input.value = history[historyIndex];
+          } else {
+            input.value = '';
+          }
+        }
+      });
+    }
+
+    function runCommand(cmd) {
+      if (cmd !== '') history.push(cmd);
+      historyIndex = history.length;
+
+      const line = document.createElement('div');
+      line.className = 'output-line';
+      line.textContent = `$ ${cmd}`;
+      terminal.appendChild(line);
+
+      if (cmd === 'clear') {
+        terminal.innerHTML = '';
+      } else {
+        const output = document.createElement('div');
+        output.className = 'output-line';
+        output.innerHTML = commands[cmd] || `'${cmd}' is not recognized as a command. Type 'help' for options.`;
+        terminal.appendChild(output);
+      }
+
+      createPrompt();
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function showPlainSection(section) {
+      plainOutput.innerHTML = commands[section] || '<p>Unknown section.</p>';
+    }
+
+    function typeTransition(lines, callback, delay = 350) {
+      transitionScreen.innerHTML = '';
+      transitionScreen.style.display = 'flex';
+      let i = 0;
+
+      function nextLine() {
+        if (i < lines.length) {
+          let line = document.createElement('div');
+          line.innerHTML = lines[i].text;
+          if (lines[i].error) line.classList.add('error');
+          transitionScreen.appendChild(line);
+          i++;
+          setTimeout(nextLine, lines[i - 1].pause || delay);
+        } else {
+          setTimeout(() => {
+            transitionScreen.style.display = 'none';
+            callback();
+          }, 500);
+        }
+      }
+
+      nextLine();
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const toPlain = terminal.style.display !== 'none';
+
+      if (toPlain) {
+        typeTransition([
+          { text: 'Initializing build environment...' },
+          { text: 'Compiling UI components...' },
+          { text: 'Deploying to GUI layer...' },
+          { text: 'Warning: UI renderer failed to initialize.', error: true, pause: 2000 },
+          { text: 'Attempting fallback...' },
+          { text: 'Fallback renderer loaded.' },
+          { text: 'Launching graphical interface...' }
+        ], () => {
+          terminal.style.display = 'none';
+          plain.style.display = 'block';
+          toggleBtn.textContent = 'Switch to Terminal Mode';
+        });
+      } else {
+        typeTransition([
+          { text: 'Shutting down GUI...' },
+          { text: 'Restoring shell session...' },
+          { text: 'Booting terminal interface...' }
+        ], () => {
+          plain.style.display = 'none';
+          terminal.style.display = 'block';
+          toggleBtn.textContent = 'Switch to Plain Mode';
+        });
+      }
+    });
+
+    // Initial boot animation
+    window.onload = () => {
+      const bootArt = [
+"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣶⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   ",
+"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣷⣤⣀⠀⠀⠀⠈⡉⠒⢲⣤⣀⣀⣤⣴⣶⣶⣿⣿⣿⠀⠀⠀   ",
+"⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⠟⠉⠁⠀⠀⡠⠄⠂⠈⢈⡉⠉⠛⢿⣿⣿⣿⣿⣿⡟⠀⠀⠀   ",
+"⠀⠀⠀⠀⣠⣾⣿⣿⣿⠀⠀⠀⠀⢸⣿⣿⡿⠟⠁⠀⡠⠀⠀⠀⣠⠔⠀⡠⠚⠀⡄⠀⠀⠉⠻⣿⣿⣿⠁⠀⠀⠀   ",
+"⠀⠀⢠⣾⣿⣿⣿⡿⠋⠀⠀⠀⠀⢸⣿⠟⠃⠀⢀⠞⠀⠀⢠⠞⠁⣠⠊⠀⢀⣼⠁⣾⡀⠀⡄⠘⣿⡏⠀⠀⠀⠀   ",
+"⠀⢠⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⢀⣶⠏⠂⢠⢀⠎⠀⠀⡰⠃⢀⣼⠃⠀⡠⢋⠇⣰⠁⢿⡄⢸⡆⢹⣇⠀⠀⠀⠀   ",
+"⠀⣾⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⣼⡟⠀⠀⡎⣞⠀⣠⡾⢁⣾⢻⠃⣠⡞⠁⡜⡰⠃⠀⢸⡗⢒⡇⠈⣿⠀⠀⠀⠀   ",
+"⢰⣿⣿⣿⡏⠀⠀⠀⠀⢀⡠⠞⣿⠁⣄⣰⣼⢁⡝⢳⣷⡟⠁⣼⡴⠙⠀⣼⠟⠁⠀⠀⠸⢸⠀⡇⠀⠿⠀⠀⠀⠀   ",
+"⠘⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⣿⢰⣿⡏⢿⡟⢻⡿⢲⣿⡿⣿⣦⣤⣾⣿⣆⣁⣉⣀⡀⣸⢰⠀⠀⣾⠀⠀⠀⠀   ",
+"⠀⢿⣿⣿⣿⡄⠀⠀⠀⠀⠀⣰⣿⣿⣿⡇⠘⣰⠈⠃⣾⡟⢡⡘⣿⡏⢸⡏⢩⣭⣽⡟⣿⣿⢻⣿⣼⣏⠀⠀⠀⠀   ",
+"⠀⠘⣿⣿⣿⣿⣄⠀⠀⠀⡼⣏⣿⣿⣿⣿⣴⣿⣦⣼⣟⣠⣦⣄⣻⡇⣼⠇⣶⣬⣿⠁⣿⡇⢸⡿⢻⣿⡄⠀⠀⠀   ",
+"⠀⠀⠘⢿⣿⣿⣿⣷⣦⡞⢸⣿⡟⢿⣾⡿⣿⢦⡀⠀⠉⠉⠉⠉⠛⠛⠛⠛⠻⠿⠿⢶⣬⣥⣿⣇⣾⠹⡗⠄⠀⠀   ",
+"⠀⠀⠀⠀⠙⠻⣿⣿⣿⡅⡿⠀⢧⠘⣇⣷⣝⣆⠉⠒⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀⢸⡿⣁⣼⣿⣿⣠⢸⣆⠀⠀   ",
+"⠀⠀⠀⠀⠀⠀⠀⠉⢻⡙⢷⡀⠈⠳⣿⡁⢻⣿⣷⡒⠀⠀⣿⠉⠉⣻⡏⠀⠀⠤⣴⣿⣟⡿⠋⣾⠛⣿⡜⣽⠀⠀   ",
+"⠀⠀⠀⠀⠀⠀⠀⡴⠋⠙⠶⣯⣀⡞⣁⡙⢻⣿⣿⣿⣦⣄⡀⠒⠒⠚⢀⣠⣴⣿⣯⣽⣋⣤⡾⠳⣴⣿⠿⢇⠀⠀   ",
+"⠀⠀⠀⠀⠀⢠⠃⠀⠀⠀⠀⢀⠭⡉⡿⠋⢹⣌⣿⣏⠻⣿⣷⣶⣿⣿⠋⢙⣿⡀⠀⢙⡏⠀⢠⠞⠙⣗⠢⡉⠀    ",
+"⠀⠀⠀⠀⠀⠀⠸⠀⢇⠀⠃⠀⠸⡀⠈⢇⠀⡇⠙⣿⣽⠤⡉⣛⣟⢋⡇⡴⢫⡾⢿⠀⢸⠀⡔⠁⡠⠀⠀⠇⠘⡆   ",
+"⠀⠀⠀⠀⠀⠀⢰⡇⠈⠂⢸⠶⡀⠑⣄⠘⡄⠘⣶⠟⠻⣦⣆⣠⣀⣀⣻⣷⠏⠀⢸⠀⠘⠴⢥⣎⣀⠔⣁⡴⠘⡏   ",
+"⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠹⠄⠜⠢⣈⡦⠗⠀⠸⢴⡶⡇⠈⠀⠙⠁⠠⢿⣦⠀⠈⠳⠄⣀⠀⠉⠉⠉⠀⣄⡜⠁   ",
+        "         NYANSEC OS v1.0",
+        ""
+      ];
+      const bootLines = bootArt.map(line => ({ text: line, pause: 100 }));
+      bootLines.push(...[
+        { text: 'Loading kernel...' },
+        { text: 'Detecting devices...' },
+        { text: 'Mounting /home/jane...' },
+        { text: 'Starting shell...' }
+      ]);
+
+      typeTransition(bootLines, () => {
+        document.getElementById('terminal').style.display = 'block';
+        toggleBtn.style.display = 'inline-block';
+        createPrompt();
+      }, 250);
+    };
+  </script>
 </body>
 </html>
