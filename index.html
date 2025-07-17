@@ -139,6 +139,7 @@
 
     const commands = {
       help: `<pre>Available commands:
+  - gui -> Switch to Gui mode
   - ls -> list available pages
   - help -> Show available commands
   - neofetch -> display specs
@@ -168,6 +169,8 @@ Packages: 666 (apt)
 Terminal: /dev/purr
 </pre>`,
 	ls: `Home`,
+	gui: '', // logic handled in runCommand
+
       clear: ''
     };
 
@@ -221,13 +224,16 @@ Terminal: /dev/purr
       terminal.appendChild(line);
 
       if (cmd === 'clear') {
-        terminal.innerHTML = '';
-      } else {
-        const output = document.createElement('div');
-        output.className = 'output-line';
-        output.innerHTML = commands[cmd] || `'${cmd}' is not recognized as a command. Type 'help' for options.`;
-        terminal.appendChild(output);
-      }
+  terminal.innerHTML = '';
+} else if (cmd === 'gui') {
+  toggleBtn.click(); // simulate button press
+} else {
+  const output = document.createElement('div');
+  output.className = 'output-line';
+  output.innerHTML = commands[cmd] || `'${cmd}' is not recognized as a command. Type 'help' for options.`;
+  terminal.appendChild(output);
+}
+
 
       createPrompt();
       terminal.scrollTop = terminal.scrollHeight;
