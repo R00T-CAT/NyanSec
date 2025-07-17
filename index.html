@@ -138,18 +138,18 @@
     const transitionScreen = document.getElementById('transition-screen');
 
     const commands = {
-      help: <pre>Available commands:
+      help: `Available commands:
   - help -> Show available commands
   - about -> About me
   - projects -> View my projects
   - contact -> Contact info
   - clear -> Clear the terminal
-  - pet -> Pet the kitty</pre>,
-      about: Hi nya, I'm R00T-CAT — a Coder that codes.,
-	  pet: 'Purr~ thanks nya',
-      projects: 1. <a href="https://null" target="_blank">Under Catstruction</a>,
-      contact: Email: <a href="mailto:root.cat.sec@gmail.com">root.cat.sec@gmail.com</a>
-GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>,
+  - pet -> Pet the kitty`,
+      about: `Hi nya, I'm R00T-CAT — a Coder that codes.`,
+      pet: 'Purr~ thanks nya',
+      projects: `1. <a href="https://null" target="_blank">Under Catstruction</a>`,
+      contact: `Email: <a href="mailto:root.cat.sec@gmail.com">root.cat.sec@gmail.com</a><br>
+GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
       clear: ''
     };
 
@@ -199,7 +199,7 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>,
 
       const line = document.createElement('div');
       line.className = 'output-line';
-      line.textContent = $ ${cmd};
+      line.textContent = `$ ${cmd}`;
       terminal.appendChild(line);
 
       if (cmd === 'clear') {
@@ -207,7 +207,7 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>,
       } else {
         const output = document.createElement('div');
         output.className = 'output-line';
-        output.innerHTML = commands[cmd] || '${cmd}' is not recognized as a command. Type 'help' for options.;
+        output.innerHTML = commands[cmd] || `${cmd} is not recognized as a command. Type 'help' for options.`;
         terminal.appendChild(output);
       }
 
@@ -276,35 +276,9 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>,
     // Initial boot animation
     window.onload = () => {
       const bootArt = [
-"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣶⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   ",
-"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣷⣤⣀⠀⠀⠀⠈⡉⠒⢲⣤⣀⣀⣤⣴⣶⣶⣿⣿⣿⠀⠀⠀   ",
-"⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⠟⠉⠁⠀⠀⡠⠄⠂⠈⢈⡉⠉⠛⢿⣿⣿⣿⣿⣿⡟⠀⠀⠀   ",
-"⠀⠀⠀⠀⣠⣾⣿⣿⣿⠀⠀⠀⠀⢸⣿⣿⡿⠟⠁⠀⡠⠀⠀⠀⣠⠔⠀⡠⠚⠀⡄⠀⠀⠉⠻⣿⣿⣿⠁⠀⠀⠀   ",
-"⠀⠀⢠⣾⣿⣿⣿⡿⠋⠀⠀⠀⠀⢸⣿⠟⠃⠀⢀⠞⠀⠀⢠⠞⠁⣠⠊⠀⢀⣼⠁⣾⡀⠀⡄⠘⣿⡏⠀⠀⠀⠀   ",
-"⠀⢠⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⢀⣶⠏⠂⢠⢀⠎⠀⠀⡰⠃⢀⣼⠃⠀⡠⢋⠇⣰⠁⢿⡄⢸⡆⢹⣇⠀⠀⠀⠀   ",
-"⠀⣾⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⣼⡟⠀⠀⡎⣞⠀⣠⡾⢁⣾⢻⠃⣠⡞⠁⡜⡰⠃⠀⢸⡗⢒⡇⠈⣿⠀⠀⠀⠀   ",
-"⢰⣿⣿⣿⡏⠀⠀⠀⠀⢀⡠⠞⣿⠁⣄⣰⣼⢁⡝⢳⣷⡟⠁⣼⡴⠙⠀⣼⠟⠁⠀⠀⠸⢸⠀⡇⠀⠿⠀⠀⠀⠀   ",
-"⠘⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⣿⢰⣿⡏⢿⡟⢻⡿⢲⣿⡿⣿⣦⣤⣾⣿⣆⣁⣉⣀⡀⣸⢰⠀⠀⣾⠀⠀⠀⠀   ",
-"⠀⢿⣿⣿⣿⡄⠀⠀⠀⠀⠀⣰⣿⣿⣿⡇⠘⣰⠈⠃⣾⡟⢡⡘⣿⡏⢸⡏⢩⣭⣽⡟⣿⣿⢻⣿⣼⣏⠀⠀⠀⠀   ",
-"⠀⠘⣿⣿⣿⣿⣄⠀⠀⠀⡼⣏⣿⣿⣿⣿⣴⣿⣦⣼⣟⣠⣦⣄⣻⡇⣼⠇⣶⣬⣿⠁⣿⡇⢸⡿⢻⣿⡄⠀⠀⠀   ",
-"⠀⠀⠘⢿⣿⣿⣿⣷⣦⡞⢸⣿⡟⢿⣾⡿⣿⢦⡀⠀⠉⠉⠉⠉⠛⠛⠛⠛⠻⠿⠿⢶⣬⣥⣿⣇⣾⠹⡗⠄⠀⠀   ",
-"⠀⠀⠀⠀⠙⠻⣿⣿⣿⡅⡿⠀⢧⠘⣇⣷⣝⣆⠉⠒⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀⢸⡿⣁⣼⣿⣿⣠⢸⣆⠀⠀   ",
-"⠀⠀⠀⠀⠀⠀⠀⠉⢻⡙⢷⡀⠈⠳⣿⡁⢻⣿⣷⡒⠀⠀⣿⠉⠉⣻⡏⠀⠀⠤⣴⣿⣟⡿⠋⣾⠛⣿⡜⣽⠀⠀   ",
-"⠀⠀⠀⠀⠀⠀⠀⡴⠋⠙⠶⣯⣀⡞⣁⡙⢻⣿⣿⣿⣦⣄⡀⠒⠒⠚⢀⣠⣴⣿⣯⣽⣋⣤⡾⠳⣴⣿⠿⢇⠀⠀   ",
-"⠀⠀⠀⠀⠀⢠⠃⠀⠀⠀⠀⢀⠭⡉⡿⠋⢹⣌⣿⣏⠻⣿⣷⣶⣿⣿⠋⢙⣿⡀⠀⢙⡏⠀⢠⠞⠙⣗⠢⡉⠀    ",
-"⠀⠀⠀⠀⠀⠀⠸⠀⢇⠀⠃⠀⠸⡀⠈⢇⠀⡇⠙⣿⣽⠤⡉⣛⣟⢋⡇⡴⢫⡾⢿⠀⢸⠀⡔⠁⡠⠀⠀⠇⠘⡆   ",
-"⠀⠀⠀⠀⠀⠀⢰⡇⠈⠂⢸⠶⡀⠑⣄⠘⡄⠘⣶⠟⠻⣦⣆⣠⣀⣀⣻⣷⠏⠀⢸⠀⠘⠴⢥⣎⣀⠔⣁⡴⠘⡏   ",
-"⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠹⠄⠜⠢⣈⡦⠗⠀⠸⢴⡶⡇⠈⠀⠙⠁⠠⢿⣦⠀⠈⠳⠄⣀⠀⠉⠉⠉⠀⣄⡜⠁   ",
-        "         NYANSEC OS v1.0",
-        ""
-      ];
-      const bootLines = bootArt.map(line => ({ text: line, pause: 100 }));
-      bootLines.push(...[
-        { text: 'Loading kernel...' },
-        { text: 'Detecting devices...' },
-        { text: 'Mounting /home/felis...' },
-        { text: 'Starting shell...' }
-      ]);
+"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣶⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ","⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣷⣤⣀⠀⠀⠀⠈⡉⠒⢲⣤⣀⣀⣤⣴⣶⣶⣿⣿⣿⠀⠀⠀ ","⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⠟⠉⠁⠀⠀⡠⠄⠂⠈⢈⡉⠉⠛⢿⣿⣿⣿⣿⣿⡟⠀⠀⠀ ","⠀⠀⠀⠀⣠⣾⣿⣿⣿⠀⠀⠀⠀⢸⣿⣿⡿⠟⠁⠀⡠⠀⠀⠀⣠⠔⠀⡠⠚⠀⡄⠀⠀⠉⠻⣿⣿⣿⠁⠀⠀⠀ ","⠀⠀⢠⣾⣿⣿⣿⡿⠋⠀⠀⠀⠀⢸⣿⠟⠃⠀⢀⠞⠀⠀⢠⠞⠁⣠⠊⠀⢀⣼⠁⣾⡀⠀⡄⠘⣿⡏⠀⠀⠀⠀ ","⠀⢠⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⢀⣶⠏⠂⢠⢀⠎⠀⠀⡰⠃⢀⣼⠃⠀⡠⢋⠇⣰⠁⢿⡄⢸⡆⢹⣇⠀⠀⠀⠀ ","⠀⣾⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⣼⡟⠀⠀⡎⣞⠀⣠⡾⢁⣾⢻⠃⣠⡞⠁⡜⡰⠃⠀⢸⡗⢒⡇⠈⣿⠀⠀⠀⠀ ","⢰⣿⣿⣿⡏⠀⠀⠀⠀⢀⡠⠞⣿⠁⣄⣰⣼⢁⡝⢳⣷⡟⠁⣼⡴⠙⠀⣼⠟⠁⠀⠀⠸⢸⠀⡇⠀⠿⠀⠀⠀⠀ ","⠘⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⣿⢰⣿⡏⢿⡟⢻⡿⢲⣿⡿⣿⣦⣤⣾⣿⣆⣁⣉⣀⡀⣸⢰⠀⠀⣾⠀⠀⠀⠀ ","⠀⢿⣿⣿⣿⡄⠀⠀⠀⠀⠀⣰⣿⣿⣿⡇⠘⣰⠈⠃⣾⡟⢡⡘⣿⡏⢸⡏⢩⣭⣽⡟⣿⣿⢻⣿⣼⣏⠀⠀⠀⠀ ","⠀⠘⣿⣿⣿⣿⣄⠀⠀⠀⡼⣏⣿⣿⣿⣿⣴⣿⣦⣼⣟⣠⣦⣄⣻⡇⣼⠇⣶⣬⣿⠁⣿⡇⢸⡿⢻⣿⡄⠀⠀⠀ ","⠀⠀⠘⢿⣿⣿⣿⣷⣦⡞⢸⣿⡟⢿⣾⡿⣿⢦⡀⠀⠉⠉⠉⠉⠛⠛⠛⠛⠻⠿⠿⢶⣬⣥⣿⣇⣾⠹⡗⠄⠀⠀ ","⠀⠀⠀⠀⠙⠻⣿⣿⣿⡅⡿⠀⢧⠘⣇⣷⣝⣆⠉⠒⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀⢸⡿⣁⣼⣿⣿⣠⢸⣆⠀⠀ ","⠀⠀⠀⠀⠀⠀⠀⠉⢻⡙⢷⡀⠈⠳⣿⡁⢻⣿⣷⡒⠀⠀⣿⠉⠉⣻⡏⠀⠀⠤⣴⣿⣟⡿⠋⣾⠛⣿⡜⣽⠀⠀ ","⠀⠀⠀⠀⠀⠀⠀⡴⠋⠙⠶⣯⣀⡞⣁⡙⢻⣿⣿⣿⣦⣄⡀⠒⠒⠚⢀⣠⣴⣿⣯⣽⣋⣤⡾⠳⣴⣿⠿⢇⠀⠀ ","⠀⠀⠀⠀⠀⢠⠃⠀⠀⠀⠀⢀⠭⡉⡿⠋⢹⣌⣿⣏⠻⣿⣷⣶⣿⣿⠋⢙⣿⡀⠀⢙⡏⠀⢠⠞⠙⣗⠢⡉⠀ ","⠀⠀⠀⠀⠀⠀⠸⠀⢇⠀⠃⠀⠸⡀⠈⢇⠀⡇⠙⣿⣽⠤⡉⣛⣟⢋⡇⡴⢫⡾⢿⠀⢸⠀⡔⠁⡠⠀⠀⠇⠘⡆ ","⠀⠀⠀⠀⠀⠀⢰⡇⠈⠂⢸⠶⡀⠑⣄⠘⡄⠘⣶⠟⠻⣦⣆⣠⣀⣀⣻⣷⠏⠀⢸⠀⠘⠴⢥⣎⣀⠔⣁⡴⠘⡏ ","⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠹⠄⠜⠢⣈⡦⠗⠀⠸⢴⡶⡇⠈⠀⠙⠁⠠⢿⣦⠀⠈⠳⠄⣀⠀⠉⠉⠉⠀⣄⡜⠁ "," NYANSEC OS v1.0",""];
+
+      const bootLines = bootArt.map(line => typeof line === 'string' ? { text: line, pause: 100 } : line);
 
       typeTransition(bootLines, () => {
         document.getElementById('terminal').style.display = 'block';
