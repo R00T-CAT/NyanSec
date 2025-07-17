@@ -5,6 +5,37 @@
   <meta charset="UTF-8">
   <title>NYANSEC_OS</title>
   <style>
+    /* Glitch overlay */
+    #glitch-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        #000,
+        #000 2px,
+        #111 2px,
+        #111 4px
+      );
+      mix-blend-mode: screen;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 3000;
+      animation: none;
+    }
+
+    @keyframes glitchFlash {
+      0%   { opacity: 0.2; }
+      20%  { opacity: 0.4; }
+      40%  { opacity: 0.6; }
+      60%  { opacity: 0.8; }
+      80%  { opacity: 0.4; }
+      100% { opacity: 0; }
+    }
+
+    /* Global styles */
     body {
       background-color: #000;
       color: #00ff00;
@@ -13,8 +44,12 @@
       padding: 0;
     }
 
-    #terminal, #plain {
+    /* Terminal mode */
+    #terminal {
       padding: 20px;
+      overflow-y: auto;
+      height: calc(100vh - 40px);
+      display: none;
     }
 
     .prompt-line {
@@ -47,11 +82,13 @@
       color: #00cc00;
     }
 
+    /* Plain / GUI mode */
     #plain {
       display: none;
       background-color: #fff;
       color: #000;
       font-family: sans-serif;
+      padding: 20px;
     }
 
     #plain h1 {
@@ -73,6 +110,7 @@
       background-color: #005500;
     }
 
+    /* Toggle button */
     #toggleBtn {
       position: fixed;
       top: 10px;
@@ -88,6 +126,7 @@
       display: none;
     }
 
+    /* Transition overlay */
     #transition-screen {
       position: fixed;
       top: 0;
@@ -112,15 +151,18 @@
   </style>
 </head>
 <body>
-  <button id="toggleBtn">Switch to Plain Mode</button>
+
+  <!-- Glitch Screen -->
+  <div id="glitch-screen"></div>
 
   <!-- Transition Overlay -->
   <div id="transition-screen"></div>
 
+  <!-- Toggle Button -->
+  <button id="toggleBtn">Switch to Plain Mode</button>
+
   <!-- Terminal Mode -->
-  <div id="terminal" style="display: none;">
-    <div class="output-line">Welcome to R00T-CAT's terminal. Type <b>help</b> to begin.</div>
-  </div>
+  <div id="terminal"></div>
 
   <!-- Plain Mode -->
   <div id="plain">
@@ -140,17 +182,47 @@
 
     const commands = {
       help: `<pre>Available commands:
+  - gui -> Switch to Gui mode
+  - ls -> list available pages
   - help -> Show available commands
+  - neofetch -> display specs
   - about -> About me
   - projects -> View my projects
   - contact -> Contact info
   - clear -> Clear the terminal
-  - pet -> Pet the kitty</pre>`,
+  - pet -> Pet the kitty</pre>
+  - hack-the-gibson -> Initiate full cyber breach 😼`,
       about: `Hi nya, I'm R00T-CAT — a Coder that codes.`,
-	  pet: 'Purr~ thanks nya',
+      pet: 'Purr~ thanks nya',
       projects: `1. <a href="https://null" target="_blank">Under Catstruction</a>`,
       contact: `Email: <a href="mailto:root.cat.sec@gmail.com">root.cat.sec@gmail.com</a>
 GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
+      neofetch: `<pre>
+          |\\___/|
+         (=^.^=)
+         (")___(")
+
+os: NYANSEC_OS x86_64
+Host: R00T-CAT-lair
+Kernel: 5.13.0-claw
+Shell: /bin/mrreow
+Uptime: 9 lives
+Theme: Pastel Cyberclaw
+Catnip Usage: 1337 MB
+Packages: 666 (apt)
+Terminal: /dev/purr
+</pre>`,
+      ls: `Home`,
+      gui: '', // Handled in runCommand
+      "hack-the-gibson": `<pre>
+> Initiating ICEbreaker.exe...
+> Establishing secure shell to gibson.cyber...
+> Uploading worm... ████████▒▒▒▒▒▒ 67%
+> Bypassing ICE... SUCCESS
+> GIBSON SYSTEM BREACHED
+🔥🔥🔥 YOU'RE INSIDE 🔥🔥🔥
+🐾 Welcome, elite cyberkitty.
+</pre>`,
       clear: ''
     };
 
@@ -166,6 +238,7 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
       prompt.textContent = '$';
 
       const input = document.createElement('input');
+      input.type = 'text';
       input.autofocus = true;
 
       promptLine.appendChild(prompt);
@@ -192,6 +265,7 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
           }
         }
       });
+      terminal.scrollTop = terminal.scrollHeight;
     }
 
     function runCommand(cmd) {
@@ -205,6 +279,14 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
 
       if (cmd === 'clear') {
         terminal.innerHTML = '';
+      } else if (cmd === 'gui') {
+        toggleBtn.click(); // Simulate button press to switch modes
+      } else if (cmd === 'hack-the-gibson') {
+        triggerGlitch();
+        const output = document.createElement('div');
+        output.className = 'output-line';
+        output.innerHTML = commands[cmd];
+        terminal.appendChild(output);
       } else {
         const output = document.createElement('div');
         output.className = 'output-line';
@@ -214,6 +296,17 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
 
       createPrompt();
       terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function triggerGlitch() {
+      const glitch = document.getElementById('glitch-screen');
+      glitch.style.animation = 'glitchFlash 0.8s ease-in-out 3';
+      glitch.style.opacity = '1';
+
+      setTimeout(() => {
+        glitch.style.animation = 'none';
+        glitch.style.opacity = '0';
+      }, 2400);
     }
 
     function showPlainSection(section) {
@@ -227,7 +320,7 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
 
       function nextLine() {
         if (i < lines.length) {
-          let line = document.createElement('div');
+          const line = document.createElement('div');
           line.innerHTML = lines[i].text;
           if (lines[i].error) line.classList.add('error');
           transitionScreen.appendChild(line);
@@ -240,7 +333,6 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
           }, 500);
         }
       }
-
       nextLine();
     }
 
@@ -270,6 +362,7 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
           plain.style.display = 'none';
           terminal.style.display = 'block';
           toggleBtn.textContent = 'Switch to Plain Mode';
+          createPrompt();
         });
       }
     });
@@ -277,25 +370,25 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
     // Initial boot animation
     window.onload = () => {
       const bootArt = [
-"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣶⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   ",
-"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣷⣤⣀⠀⠀⠀⠈⡉⠒⢲⣤⣀⣀⣤⣴⣶⣶⣿⣿⣿⠀⠀⠀   ",
-"⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⠟⠉⠁⠀⠀⡠⠄⠂⠈⢈⡉⠉⠛⢿⣿⣿⣿⣿⣿⡟⠀⠀⠀   ",
-"⠀⠀⠀⠀⣠⣾⣿⣿⣿⠀⠀⠀⠀⢸⣿⣿⡿⠟⠁⠀⡠⠀⠀⠀⣠⠔⠀⡠⠚⠀⡄⠀⠀⠉⠻⣿⣿⣿⠁⠀⠀⠀   ",
-"⠀⠀⢠⣾⣿⣿⣿⡿⠋⠀⠀⠀⠀⢸⣿⠟⠃⠀⢀⠞⠀⠀⢠⠞⠁⣠⠊⠀⢀⣼⠁⣾⡀⠀⡄⠘⣿⡏⠀⠀⠀⠀   ",
-"⠀⢠⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⢀⣶⠏⠂⢠⢀⠎⠀⠀⡰⠃⢀⣼⠃⠀⡠⢋⠇⣰⠁⢿⡄⢸⡆⢹⣇⠀⠀⠀⠀   ",
-"⠀⣾⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⣼⡟⠀⠀⡎⣞⠀⣠⡾⢁⣾⢻⠃⣠⡞⠁⡜⡰⠃⠀⢸⡗⢒⡇⠈⣿⠀⠀⠀⠀   ",
-"⢰⣿⣿⣿⡏⠀⠀⠀⠀⢀⡠⠞⣿⠁⣄⣰⣼⢁⡝⢳⣷⡟⠁⣼⡴⠙⠀⣼⠟⠁⠀⠀⠸⢸⠀⡇⠀⠿⠀⠀⠀⠀   ",
-"⠘⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⣿⢰⣿⡏⢿⡟⢻⡿⢲⣿⡿⣿⣦⣤⣾⣿⣆⣁⣉⣀⡀⣸⢰⠀⠀⣾⠀⠀⠀⠀   ",
-"⠀⢿⣿⣿⣿⡄⠀⠀⠀⠀⠀⣰⣿⣿⣿⡇⠘⣰⠈⠃⣾⡟⢡⡘⣿⡏⢸⡏⢩⣭⣽⡟⣿⣿⢻⣿⣼⣏⠀⠀⠀⠀   ",
-"⠀⠘⣿⣿⣿⣿⣄⠀⠀⠀⡼⣏⣿⣿⣿⣿⣴⣿⣦⣼⣟⣠⣦⣄⣻⡇⣼⠇⣶⣬⣿⠁⣿⡇⢸⡿⢻⣿⡄⠀⠀⠀   ",
-"⠀⠀⠘⢿⣿⣿⣿⣷⣦⡞⢸⣿⡟⢿⣾⡿⣿⢦⡀⠀⠉⠉⠉⠉⠛⠛⠛⠛⠻⠿⠿⢶⣬⣥⣿⣇⣾⠹⡗⠄⠀⠀   ",
-"⠀⠀⠀⠀⠙⠻⣿⣿⣿⡅⡿⠀⢧⠘⣇⣷⣝⣆⠉⠒⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀⢸⡿⣁⣼⣿⣿⣠⢸⣆⠀⠀   ",
-"⠀⠀⠀⠀⠀⠀⠀⠉⢻⡙⢷⡀⠈⠳⣿⡁⢻⣿⣷⡒⠀⠀⣿⠉⠉⣻⡏⠀⠀⠤⣴⣿⣟⡿⠋⣾⠛⣿⡜⣽⠀⠀   ",
-"⠀⠀⠀⠀⠀⠀⠀⡴⠋⠙⠶⣯⣀⡞⣁⡙⢻⣿⣿⣿⣦⣄⡀⠒⠒⠚⢀⣠⣴⣿⣯⣽⣋⣤⡾⠳⣴⣿⠿⢇⠀⠀   ",
-"⠀⠀⠀⠀⠀⢠⠃⠀⠀⠀⠀⢀⠭⡉⡿⠋⢹⣌⣿⣏⠻⣿⣷⣶⣿⣿⠋⢙⣿⡀⠀⢙⡏⠀⢠⠞⠙⣗⠢⡉⠀    ",
-"⠀⠀⠀⠀⠀⠀⠸⠀⢇⠀⠃⠀⠸⡀⠈⢇⠀⡇⠙⣿⣽⠤⡉⣛⣟⢋⡇⡴⢫⡾⢿⠀⢸⠀⡔⠁⡠⠀⠀⠇⠘⡆   ",
-"⠀⠀⠀⠀⠀⠀⢰⡇⠈⠂⢸⠶⡀⠑⣄⠘⡄⠘⣶⠟⠻⣦⣆⣠⣀⣀⣻⣷⠏⠀⢸⠀⠘⠴⢥⣎⣀⠔⣁⡴⠘⡏   ",
-"⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠹⠄⠜⠢⣈⡦⠗⠀⠸⢴⡶⡇⠈⠀⠙⠁⠠⢿⣦⠀⠈⠳⠄⣀⠀⠉⠉⠉⠀⣄⡜⠁   ",
+"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣶⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣷⣤⣀⠀⠀⠀⠈⡉⠒⢲⣤⣀⣀⣤⣴⣶⣶⣿⣿⣿⠀⠀⠀",
+"⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⠟⠉⠁⠀⠀⡠⠄⠂⠈⢈⡉⠉⠛⢿⣿⣿⣿⣿⣿⡟⠀⠀⠀",
+"⠀⠀⠀⠀⣠⣾⣿⣿⣿⠀⠀⠀⠀⢸⣿⣿⡿⠟⠁⠀⡠⠀⠀⠀⣠⠔⠀⡠⠚⠀⡄⠀⠀⠉⠻⣿⣿⣿⠁⠀⠀⠀",
+"⠀⠀⢠⣾⣿⣿⣿⡿⠋⠀⠀⠀⠀⢸⣿⠟⠃⠀⢀⠞⠀⠀⢠⠞⠁⣠⠊⠀⢀⣼⠁⣾⡀⠀⡄⠘⣿⡏⠀⠀⠀⠀",
+"⠀⢠⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⢀⣶⠏⠂⢠⢀⠎⠀⠀⡰⠃⢀⣼⠃⠀⡠⢋⠇⣰⠁⢿⡄⢸⡆⢹⣇⠀⠀⠀⠀",
+"⠀⣾⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⣼⡟⠀⠀⡎⣞⠀⣠⡾⢁⣾⢻⠃⣠⡞⠁⡜⡰⠃⠀⢸⡗⢒⡇⠈⣿⠀⠀⠀⠀",
+"⢰⣿⣿⣿⡏⠀⠀⠀⠀⢀⡠⠞⣿⠁⣄⣰⣼⢁⡝⢳⣷⡟⠁⣼⡴⠙⠀⣼⠟⠁⠀⠀⠸⢸⠀⡇⠀⠿⠀⠀⠀⠀",
+"⠘⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⣿⢰⣿⡏⢿⡟⢻⡿⢲⣿⡿⣿⣦⣤⣾⣿⣆⣁⣉⣀⡀⣸⢰⠀⠀⣾⠀⠀⠀⠀",
+"⠀⢿⣿⣿⣿⡄⠀⠀⠀⠀⠀⣰⣿⣿⣿⡇⠘⣰⠈⠃⣾⡟⢡⡘⣿⡏⢸⡏⢩⣭⣽⡟⣿⣿⢻⣿⣼⣏⠀⠀⠀⠀",
+"⠀⠘⣿⣿⣿⣿⣄⠀⠀⠀⡼⣏⣿⣿⣿⣿⣴⣿⣦⣼⣟⣠⣦⣄⣻⡇⣼⠇⣶⣬⣿⠁⣿⡇⢸⡿⢻⣿⡄⠀⠀⠀",
+"⠀⠀⠘⢿⣿⣿⣿⣷⣦⡞⢸⣿⡟⢿⣾⡿⣿⢦⡀⠀⠉⠉⠉⠉⠛⠛⠛⠛⠻⠿⠿⢶⣬⣥⣿⣇⣾⠹⡗⠄⠀⠀",
+"⠀⠀⠀⠀⠙⠻⣿⣿⣿⡅⡿⠀⢧⠘⣇⣷⣝⣆⠉⠒⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀⢸⡿⣁⣼⣿⣿⣠⢸⣆⠀⠀",
+"⠀⠀⠀⠀⠀⠀⠀⠉⢻⡙⢷⡀⠈⠳⣿⡁⢻⣿⣷⡒⠀⠀⣿⠉⠉⣻⡏⠀⠀⠤⣴⣿⣟⡿⠋⣾⠛⣿⡜⣽⠀⠀",
+"⠀⠀⠀⠀⠀⠀⠀⡴⠋⠙⠶⣯⣀⡞⣁⡙⢻⣿⣿⣿⣦⣄⡀⠒⠒⠚⢀⣠⣴⣿⣯⣽⣋⣤⡾⠳⣴⣿⠿⢇⠀⠀",
+"⠀⠀⠀⠀⠀⢠⠃⠀⠀⠀⠀⢀⠭⡉⡿⠋⢹⣌⣿⣏⠻⣿⣷⣶⣿⣿⠋⢙⣿⡀⠀⢙⡏⠀⢠⠞⠙⣗⠢⡉⠀",
+"⠀⠀⠀⠀⠀⠀⠸⠀⢇⠀⠃⠀⠸⡀⠈⢇⠀⡇⠙⣿⣽⠤⡉⣛⣟⢋⡇⡴⢫⡾⢿⠀⢸⠀⡔⠁⡠⠀⠀⠇⠘⡆",
+"⠀⠀⠀⠀⠀⠀⢰⡇⠈⠂⢸⠶⡀⠑⣄⠘⡄⠘⣶⠟⠻⣦⣆⣠⣀⣀⣻⣷⠏⠀⢸⠀⠘⠴⢥⣎⣀⠔⣁⡴⠘⡏",
+"⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠹⠄⠜⠢⣈⡦⠗⠀⠸⢴⡶⡇⠈⠀⠙⠁⠠⢿⣦⠀⠈⠳⠄⣀⠀⠉⠉⠉⠀⣄⡜⠁",
         "         NYANSEC OS v1.0",
         ""
       ];
@@ -308,7 +401,7 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
       ]);
 
       typeTransition(bootLines, () => {
-        document.getElementById('terminal').style.display = 'block';
+        terminal.style.display = 'block';
         toggleBtn.style.display = 'inline-block';
         createPrompt();
       }, 250);
