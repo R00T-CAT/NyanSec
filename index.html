@@ -138,13 +138,17 @@
     const transitionScreen = document.getElementById('transition-screen');
 
     const commands = {
-      help: `Available commands:,
-  - help -> Show available commands,
-  - about -> About me,
-  - projects -> View my projects,
-  - contact -> Contact info,
-  - clear -> Clear the terminal,
-  - pet -> Pet the kitty`,
+      help: `
+Available commands:
+<ul>
+  <li>help - Show available commands</li>
+  <li>about - About me</li>
+  <li>projects - View my projects</li>
+  <li>contact - Contact info</li>
+  <li>clear - Clear the terminal</li>
+  <li>pet - Pet the kitty</li>
+</ul>`,
+
       about: `Hi nya, I'm R00T-CAT — a Coder that codes.`,
       pet: 'Purr~ thanks nya',
       projects: `1. <a href="https://null" target="_blank">Under Catstruction</a>`,
@@ -295,7 +299,12 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
 "⠀⠀⠀⠀⠀⠀⠸⠀⢇⠀⠃⠀⠸⡀⠈⢇⠀⡇⠙⣿⣽⠤⡉⣛⣟⢋⡇⡴⢫⡾⢿⠀⢸⠀⡔⠁⡠⠀⠀⠇⠘⡆ ",
 "⠀⠀⠀⠀⠀⠀⢰⡇⠈⠂⢸⠶⡀⠑⣄⠘⡄⠘⣶⠟⠻⣦⣆⣠⣀⣀⣻⣷⠏⠀⢸⠀⠘⠴⢥⣎⣀⠔⣁⡴⠘⡏ ",
 "⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠹⠄⠜⠢⣈⡦⠗⠀⠸⢴⡶⡇⠈⠀⠙⠁⠠⢿⣦⠀⠈⠳⠄⣀⠀⠉⠉⠉⠀⣄⡜⠁ ",
-" NYANSEC OS v1.0",""];
+" NYANSEC OS v1.0","",
+      { text: 'Loading kernel...' },
+        { text: 'Detecting devices...' },
+        { text: 'Mounting /home/felis...' },
+        { text: 'Starting shell...' }
+      ];
 
       const bootLines = bootArt.map(line => typeof line === 'string' ? { text: line, pause: 100 } : line);
 
