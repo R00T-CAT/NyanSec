@@ -4,6 +4,66 @@
   <meta charset="UTF-8">
   <title>NYANSEC_OS</title>
   <style>
+    #plain {
+      background: linear-gradient(to bottom right, #1a1a2e, #16213e);
+      font-family: 'Press Start 2P', cursive;
+      color: #fff;
+      padding: 2rem;
+      min-height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .neon {
+      text-shadow: 0 0 5px #f0f, 0 0 10px #f0f, 0 0 15px #f0f;
+      color: #ff9efc;
+    }
+    .catboy-card {
+      background-color: #1e1e2f;
+      padding: 1rem;
+      align-items: center;
+      border-radius: 1rem;
+      border: 2px solid;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+    .catboy-card:hover {
+      transform: scale(1.05);
+    }
+    .about { border-color: #ff8cd6; }
+    .projects { border-color: #00ffff; }
+    .contact { border-color: #ffe066; }
+    .catboy-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+      width: 100%;
+      max-width: 800px;
+      flex-grow: 1;
+    }
+    @media (min-width: 768px) {
+      .catboy-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .plain-heading {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .catboy-footer {
+      font-size: 0.75rem;
+      margin-top: 2rem;
+      color: #aaa;
+      text-align: center;
+    }
+    #plain-output {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 800px;
+    }
     body {
       background-color: #000;
       color: #00ff00;
@@ -121,14 +181,32 @@
     <div class="output-line">Welcome to R00T-CAT's terminal. Type <b>help</b> to begin.</div>
   </div>
 
-  <!-- Plain Mode -->
-  <div id="plain">
-    <h1>R00T-CAT</h1>
-    <button class="button" onclick="showPlainSection('about')">About</button>
-    <button class="button" onclick="showPlainSection('projects')">Projects</button>
-    <button class="button" onclick="showPlainSection('contact')">Contact</button>
-    <div id="plain-output" style="margin-top: 20px;"></div>
+   <!-- Plain Mode -->
+<div id="plain">
+   <h1 class="neon plain-heading">> Felis@byte:~$ Welcome to NyanSecOS</h1>
+  <p style="color: #c7a0ff; font-size: 0.75rem; margin-bottom: 2rem;">~ the ultimate terminal for cyber neko lovers ~</p>
+
+  <div class="catboy-grid">
+    <div class="catboy-card about" onclick="showPlainSection('about')">
+      <h2 class="neon" style="font-size: 1rem;">About Me</h2>
+      <p style="font-size: 0.6rem; color: #ffc2f9;">I'm a digital catboy roaming the wires of the net~ nya~</p>
+    </div>
+    <div class="catboy-card projects" onclick="showPlainSection('projects')">
+      <h2 class="neon" style="font-size: 1rem;">Projects</h2>
+      <p style="font-size: 0.6rem; color: #a8fffe;">Peek into my pixel purrfection! Vibes await.</p>
+    </div>
+    <div class="catboy-card contact" onclick="showPlainSection('contact')">
+      <h2 class="neon" style="font-size: 1rem;">Contact</h2>
+      <p style="font-size: 0.6rem; color: #ffeebc;">Send me a meow~</p>
+    </div>
   </div>
+
+  <div id="plain-output"></div>
+
+  <footer class="catboy-footer">
+    © 2025 R00T-CAT. | Meow mode enabled 
+  </footer>
+</div>
 
   <script>
     const terminal = document.getElementById('terminal');
