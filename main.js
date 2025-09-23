@@ -24,7 +24,7 @@ Available commands:
   <li>neofetch - Show NyanSec OS info</li>
   <li>gui - Switch to GUI mode</li>
   <li>terminal - Switch to Terminal mode</li>
-  <li>goto [page] - Open a safe internal page</li>
+  <li>goto [page] - Open an approved page</li>
 </ul>`,
   about: `Hi nya, I'm R00T-CAT — a Coder that codes.`,
   pet: 'Purr~ thanks nya',
@@ -71,10 +71,7 @@ GitHub: <a href="https://github.com/R00T-CAT" target="_blank" rel="noopener nore
 // SAFE REDIRECTION LOGIC
 // --------------------------
 const allowedGotoPages = {
-  home: "/",
-  projects: "/#projects",
-  contact: "/#contact",
-  about: "/#about"
+  github: "https://github.com/R00T-CAT",
 };
 
 // --------------------------
@@ -188,7 +185,7 @@ function runCommand(cmd) {
     if (allowedGotoPages[page]) {
       window.location.href = allowedGotoPages[page];
     } else {
-      output.textContent = "Invalid or unsafe redirect. Allowed: home, projects, contact, about.";
+      output.textContent = "Invalid or unsafe redirect. Allowed: Github";
     }
   } else if (commands[cmd]) {
     output.innerHTML = commands[cmd];
@@ -473,7 +470,7 @@ function guiRunCommand(cmd) {
     if (allowedGotoPages[page]) {
       window.location.href = allowedGotoPages[page];
     } else {
-      guiPrintLine("Invalid or unsafe redirect. Allowed: home, projects, contact, about.");
+      guiPrintLine("Invalid or unsafe redirect. Allowed: Github");
     }
   } else if (cmd === "meow") {
     guiPrintLine(commands.meow);
