@@ -74,7 +74,7 @@ Runs on any modern browser. Even runs on your fridge if it has Chrome.
 ## Roadmap
 
 - More silly apps
-- A boot-up sequence that looks like a 90s hacking montage
+- A boot-up sequence that looks more catty
 - Smarter terminal with more "fake Linux" commands
 
 
