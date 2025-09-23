@@ -3,400 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <title>NYANSEC_OS</title>
-  <style>
-    #plain {
-      background: linear-gradient(to bottom right, #1a1a2e, #16213e);
-      font-family: 'Press Start 2P', cursive;
-      color: #fff;
-      padding: 2rem;
-      min-height: 100vh;
-      width: 100vw;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .neon {
-      text-shadow: 0 0 5px #f0f, 0 0 10px #f0f, 0 0 15px #f0f;
-      color: #ff9efc;
-    }
-    .catboy-card {
-      background-color: #1e1e2f;
-      padding: 1rem;
-      align-items: center;
-      border-radius: 1rem;
-      border: 2px solid;
-      transition: 0.3s ease;
-      cursor: pointer;
-    }
-    .catboy-card:hover {
-      transform: scale(1.05);
-    }
-    .about { border-color: #ff8cd6; }
-    .projects { border-color: #00ffff; }
-    .contact { border-color: #ffe066; }
-    .catboy-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr;
-  justify-content: center;
-}
-
-@media (min-width: 768px) {
-  .catboy-grid {
-    grid-template-columns: repeat(3, auto);
-    justify-content: center;               
-  }
-}
-
-    .plain-heading {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .catboy-footer {
-      font-size: 0.75rem;
-      margin-top: 2rem;
-      color: #aaa;
-      text-align: center;
-    }
-    #plain-output {
-      margin-top: 20px;
-      width: 100%;
-      max-width: 800px;
-    }
-    body {
-      background-color: #000;
-      color: #00ff00;
-      font-family: monospace;
-      margin: 0;
-      padding: 0;
-    }
-
-    #terminal, #plain {
-      padding: 20px;
-    }
-
-    .prompt-line {
-      display: flex;
-    }
-
-    .prompt {
-      margin-right: 5px;
-    }
-
-    input {
-      background: none;
-      border: none;
-      color: #00ff00;
-      font: inherit;
-      outline: none;
-      width: 100%;
-    }
-
-    .output-line {
-      margin-bottom: 5px;
-    }
-
-    a {
-      color: #00ff00;
-      text-decoration: underline;
-    }
-
-    a:hover {
-      color: #00cc00;
-    }
-
-    #plain {
-      display: none;
-      background-color: #fff;
-      color: #000;
-      font-family: sans-serif;
-    }
-
-    #plain h1 {
-      font-size: 24px;
-    }
-
-    .button {
-      margin: 5px;
-      padding: 10px 20px;
-      border: none;
-      background-color: #007700;
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
-      border-radius: 4px;
-    }
-
-    .button:hover {
-      background-color: #005500;
-    }
-
-    #toggleBtn {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 1000;
-      background: #444;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      cursor: pointer;
-      font-size: 14px;
-      border-radius: 4px;
-      display: none;
-    }
-
-    #transition-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      color: #00ff00;
-      font-family: monospace;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 2000;
-      padding: 20px;
-      white-space: pre-wrap;
-    }
-
-    .error {
-      color: red;
-    }
-  </style>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button id="toggleBtn">Switch to Plain Mode</button>
-
-  <!-- Transition Overlay -->
+  <!-- Toggle button for switching between GUI and Terminal modes -->
+  <button id="toggleBtn">Switch to GUI Mode</button>
+  <!-- Transition animation overlay -->
   <div id="transition-screen"></div>
 
-  <!-- Terminal Mode -->
+  <!-- --------------------------
+       TERMINAL MODE SECTION
+       -------------------------- -->
   <div id="terminal" style="display: none;">
     <div class="output-line">Welcome to R00T-CAT's terminal. Type <b>help</b> to begin.</div>
   </div>
 
-   <!-- Plain Mode -->
-<div id="plain">
-   <h1 class="neon plain-heading">> Felis@byte:~$ Welcome to NyanSecOS</h1>
-  <p style="color: #c7a0ff; font-size: 0.75rem; margin-bottom: 2rem;">~ the ultimate terminal for cyber neko lovers ~</p>
+  <!-- --------------------------
+       GUI MODE SECTION
+       -------------------------- -->
+  <div id="plain">
+    <!-- --- DESKTOP ICONS --- -->
+    <div class="desktop-icons">
+      <!-- About Me icon -->
+      <div class="desktop-icon" data-app="about">
+        <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/svgs/solid/circle-info.svg" alt="Info Icon">
+        <div>About Me</div>
+      </div>
+      <!-- Projects icon -->
+      <div class="desktop-icon" data-app="projects">
+        <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/svgs/solid/folder.svg" alt="Folder Icon">
+        <div>Projects</div>
+      </div>
+      <!-- Contact icon -->
+      <div class="desktop-icon" data-app="contact">
+        <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/svgs/solid/envelope.svg" alt="Envelope Icon">
+        <div>Contact</div>
+      </div>
+      <!-- Terminal icon -->
+      <div class="desktop-icon" data-app="terminal">
+        <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/svgs/solid/terminal.svg" alt="Terminal Icon">
+        <div>Terminal</div>
+      </div>
+    </div>
 
-  <div class="catboy-grid">
-    <div class="catboy-card about" onclick="showPlainSection('about')">
-      <h2 class="neon" style="font-size: 1rem;">About Me</h2>
-      <p style="font-size: 0.6rem; color: #ffc2f9;">I'm a digital cat roaming the wires of the net~ nya~</p>
+    <!-- ----- WINDOW: ABOUT ME ------ -->
+    <div class="catboy-card about" id="window-about" style="top:120px;left:200px;">
+      <div class="title-bar">
+        <span class="window-title">About Me</span>
+        <button class="window-close" title="Close">&times;</button>
+      </div>
+      <div class="window-content">
+        <h2>About Me</h2>
+        <p>I'm a digital cat roaming the wires of the net~ nya~</p>
+      </div>
     </div>
-    <div class="catboy-card projects" onclick="showPlainSection('projects')">
-      <h2 class="neon" style="font-size: 1rem;">Projects</h2>
-      <p style="font-size: 0.6rem; color: #a8fffe;">Peek into my pixel purrfection! Vibes await.</p>
+
+    <!-- ----- WINDOW: PROJECTS (File Explorer style) ------ -->
+    <div class="catboy-card projects" id="window-projects" style="top:160px;left:480px;">
+      <div class="title-bar">
+        <span class="window-title">Projects</span>
+        <button class="window-close" title="Close">&times;</button>
+      </div>
+      <div class="window-content" style="padding:0;">
+        <div style="background:#222; padding:8px; border-bottom:1px solid #333; font-size:0.9rem;">
+          <b>File Explorer</b> &nbsp; | &nbsp; <span style="color:#aaa;">/home/projects</span>
+        </div>
+        <div style="padding:12px; display:flex; flex-wrap:wrap; gap:18px;">
+          <!-- Project 1 -->
+          <div class="project-item" style="width:90px; text-align:center; cursor:pointer;">
+            <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/svgs/solid/file-code.svg" alt="Project 1" style="width:40px; height:40px; margin-bottom:6px;">
+            <div style="font-size:0.8rem; color:#fff;">CatScript</div>
+          </div>
+          <!-- Project 2 -->
+          <div class="project-item" style="width:90px; text-align:center; cursor:pointer;">
+            <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/svgs/solid/folder.svg" alt="Project 2" style="width:40px; height:40px; margin-bottom:6px;">
+            <div style="font-size:0.8rem; color:#fff;">MeowDB</div>
+          </div>
+          <!-- Project 3 -->
+          <div class="project-item" style="width:90px; text-align:center; cursor:pointer;">
+            <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/svgs/solid/file-lines.svg" alt="Project 3" style="width:40px; height:40px; margin-bottom:6px;">
+            <div style="font-size:0.8rem; color:#fff;">PurrDocs</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="catboy-card contact" onclick="showPlainSection('contact')">
-      <h2 class="neon" style="font-size: 1rem;">Contact</h2>
-      <p style="font-size: 0.6rem; color: #ffeebc;">Send me a meow~</p>
+
+    <!-- ---- WINDOW: CONTACT ----- -->
+    <div class="catboy-card contact" id="window-contact" style="top:220px;left:760px;">
+      <div class="title-bar">
+        <span class="window-title">Contact</span>
+        <button class="window-close" title="Close">&times;</button>
+      </div>
+      <div class="window-content">
+        <h2>Contact</h2>
+        <p>Send me a meow~</p>
+      </div>
+    </div>
+
+    <!-- ------ WINDOW: TERMINAL (GUI Terminal) ---- -->
+    <div class="catboy-card terminal" id="window-terminal" style="top:260px;left:400px;width:480px;">
+      <div class="title-bar">
+        <span class="window-title">Terminal</span>
+        <button class="window-close" title="Close">&times;</button>
+      </div>
+      <div class="window-content" style="background:#111; color:#00ff00; font-family:monospace; min-height:220px; max-height:400px; overflow:auto; padding:0;">
+        <div id="gui-terminal-output"></div>
+        <div class="prompt-line" id="gui-terminal-prompt">
+          <span class="prompt">$</span>
+          <input id="gui-terminal-input" type="text" autocomplete="off" style="background:none; border:none; color:#00ff00; font:inherit; outline:none; width:90%;">
+        </div>
+      </div>
+    </div>
+
+    <!-- ----- TASKBAR (Bottom bar with app buttons and start menu) ----- -->
+    <div class="taskbar">
+      <button class="taskbar-btn" id="start-btn">[Start]</button>
+      <button class="taskbar-btn" data-app="about">About</button>
+      <button class="taskbar-btn" data-app="projects">Projects</button>
+      <button class="taskbar-btn" data-app="contact">Contact</button>
+      <button class="taskbar-btn" data-app="terminal">Terminal</button>
+      <!-- Start Menu Dropdown -->
+      <div id="start-menu" style="display:none; position:absolute; bottom:45px; left:10px; background:#222; border:1px solid #555; border-radius:6px; box-shadow:0 2px 8px #0008; min-width:140px; z-index:999;">
+        <ul style="list-style:none; margin:0; padding:8px 0;">
+          <li><button class="start-menu-item" data-app="about" style="width:100%; background:none; border:none; color:#fff; text-align:left; padding:8px 16px; cursor:pointer;">About Me</button></li>
+          <li><button class="start-menu-item" data-app="projects" style="width:100%; background:none; border:none; color:#fff; text-align:left; padding:8px 16px; cursor:pointer;">Projects</button></li>
+          <li><button class="start-menu-item" data-app="contact" style="width:100%; background:none; border:none; color:#fff; text-align:left; padding:8px 16px; cursor:pointer;">Contact</button></li>
+          <li><button class="start-menu-item" data-app="terminal" style="width:100%; background:none; border:none; color:#fff; text-align:left; padding:8px 16px; cursor:pointer;">Terminal</button></li>
+        </ul>
+      </div>
     </div>
   </div>
-
-  <div id="plain-output"></div>
-
-  <footer class="catboy-footer">
-    © 2025 R00T-CAT. | Meow mode enabled 
-  </footer>
-</div>
-
-  <script>
-    const terminal = document.getElementById('terminal');
-    const plain = document.getElementById('plain');
-    const toggleBtn = document.getElementById('toggleBtn');
-    const plainOutput = document.getElementById('plain-output');
-    const transitionScreen = document.getElementById('transition-screen');
-
-    const commands = {
-      help: `
-Available commands:
-<ul>
-  <li>help - Show available commands</li>
-  <li>about - About me</li>
-  <li>projects - View my projects</li>
-  <li>contact - Contact info</li>
-  <li>clear - Clear the terminal</li>
-  <li>pet - Pet the kitty</li>
-</ul>`,
-
-      about: `Hi nya, I'm R00T-CAT — a Coder that codes.`,
-      pet: 'Purr~ thanks nya',
-      projects: `1. <a href="https://null" target="_blank">Under Catstruction</a>`,
-      contact: `Email: <a href="mailto:root.cat.sec@gmail.com">root.cat.sec@gmail.com</a><br>
-GitHub: <a href="https://github.com/R00T-CAT" target="_blank">github.com</a>`,
-      clear: ''
-    };
-
-    let history = [];
-    let historyIndex = -1;
-
-    function createPrompt() {
-      const promptLine = document.createElement('div');
-      promptLine.className = 'prompt-line';
-
-      const prompt = document.createElement('span');
-      prompt.className = 'prompt';
-      prompt.textContent = '$';
-
-      const input = document.createElement('input');
-      input.autofocus = true;
-
-      promptLine.appendChild(prompt);
-      promptLine.appendChild(input);
-      terminal.appendChild(promptLine);
-      input.focus();
-
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          const command = input.value.trim();
-          terminal.removeChild(promptLine);
-          runCommand(command);
-        } else if (e.key === 'ArrowUp') {
-          if (history.length > 0 && historyIndex > 0) {
-            historyIndex--;
-            input.value = history[historyIndex];
-          }
-        } else if (e.key === 'ArrowDown') {
-          if (history.length > 0 && historyIndex < history.length - 1) {
-            historyIndex++;
-            input.value = history[historyIndex];
-          } else {
-            input.value = '';
-          }
-        }
-      });
-    }
-
-    function runCommand(cmd) {
-      if (cmd !== '') history.push(cmd);
-      historyIndex = history.length;
-
-      const line = document.createElement('div');
-      line.className = 'output-line';
-      line.textContent = `$ ${cmd}`;
-      terminal.appendChild(line);
-
-      if (cmd === 'clear') {
-        terminal.innerHTML = '';
-      } else {
-        const output = document.createElement('div');
-        output.className = 'output-line';
-        output.innerHTML = commands[cmd] || `${cmd} is not recognized as a command. Type 'help' for options.`;
-        terminal.appendChild(output);
-      }
-
-      createPrompt();
-      terminal.scrollTop = terminal.scrollHeight;
-    }
-
-    function showPlainSection(section) {
-      plainOutput.innerHTML = commands[section] || '<p>Unknown section.</p>';
-    }
-
-    function typeTransition(lines, callback, delay = 350) {
-      transitionScreen.innerHTML = '';
-      transitionScreen.style.display = 'flex';
-      let i = 0;
-
-      function nextLine() {
-        if (i < lines.length) {
-          let line = document.createElement('div');
-          line.innerHTML = lines[i].text;
-          if (lines[i].error) line.classList.add('error');
-          transitionScreen.appendChild(line);
-          i++;
-          setTimeout(nextLine, lines[i - 1].pause || delay);
-        } else {
-          setTimeout(() => {
-            transitionScreen.style.display = 'none';
-            callback();
-          }, 500);
-        }
-      }
-
-      nextLine();
-    }
-
-    toggleBtn.addEventListener('click', () => {
-      const toPlain = terminal.style.display !== 'none';
-
-      if (toPlain) {
-        typeTransition([
-          { text: 'Initializing build environment...' },
-          { text: 'Compiling UI components...' },
-          { text: 'Deploying to GUI layer...' },
-          { text: 'Warning: UI renderer failed to initialize.', error: true, pause: 2000 },
-          { text: 'Attempting fallback...' },
-          { text: 'Fallback renderer loaded.' },
-          { text: 'Launching graphical interface...' }
-        ], () => {
-          terminal.style.display = 'none';
-          plain.style.display = 'block';
-          toggleBtn.textContent = 'Switch to Terminal Mode';
-        });
-      } else {
-        typeTransition([
-          { text: 'Shutting down GUI...' },
-          { text: 'Restoring shell session...' },
-          { text: 'Booting terminal interface...' }
-        ], () => {
-          plain.style.display = 'none';
-          terminal.style.display = 'block';
-          toggleBtn.textContent = 'Switch to Plain Mode';
-        });
-      }
-    });
-
-    // Initial boot animation
-    window.onload = () => {
-      const bootArt = [
-"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣶⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ",
-"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣷⣤⣀⠀⠀⠀⠈⡉⠒⢲⣤⣀⣀⣤⣴⣶⣶⣿⣿⣿⠀⠀⠀ ",
-"⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⠟⠉⠁⠀⠀⡠⠄⠂⠈⢈⡉⠉⠛⢿⣿⣿⣿⣿⣿⡟⠀⠀⠀ ",
-"⠀⠀⠀⠀⣠⣾⣿⣿⣿⠀⠀⠀⠀⢸⣿⣿⡿⠟⠁⠀⡠⠀⠀⠀⣠⠔⠀⡠⠚⠀⡄⠀⠀⠉⠻⣿⣿⣿⠁⠀⠀⠀ ",
-"⠀⠀⢠⣾⣿⣿⣿⡿⠋⠀⠀⠀⠀⢸⣿⠟⠃⠀⢀⠞⠀⠀⢠⠞⠁⣠⠊⠀⢀⣼⠁⣾⡀⠀⡄⠘⣿⡏⠀⠀⠀⠀ ",
-"⠀⢠⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⢀⣶⠏⠂⢠⢀⠎⠀⠀⡰⠃⢀⣼⠃⠀⡠⢋⠇⣰⠁⢿⡄⢸⡆⢹⣇⠀⠀⠀⠀ ",
-"⠀⣾⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⣼⡟⠀⠀⡎⣞⠀⣠⡾⢁⣾⢻⠃⣠⡞⠁⡜⡰⠃⠀⢸⡗⢒⡇⠈⣿⠀⠀⠀⠀ ",
-"⢰⣿⣿⣿⡏⠀⠀⠀⠀⢀⡠⠞⣿⠁⣄⣰⣼⢁⡝⢳⣷⡟⠁⣼⡴⠙⠀⣼⠟⠁⠀⠀⠸⢸⠀⡇⠀⠿⠀⠀⠀⠀ ",
-"⠘⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⣿⢰⣿⡏⢿⡟⢻⡿⢲⣿⡿⣿⣦⣤⣾⣿⣆⣁⣉⣀⡀⣸⢰⠀⠀⣾⠀⠀⠀⠀ ",
-"⠀⢿⣿⣿⣿⡄⠀⠀⠀⠀⠀⣰⣿⣿⣿⡇⠘⣰⠈⠃⣾⡟⢡⡘⣿⡏⢸⡏⢩⣭⣽⡟⣿⣿⢻⣿⣼⣏⠀⠀⠀⠀ ",
-"⠀⠘⣿⣿⣿⣿⣄⠀⠀⠀⡼⣏⣿⣿⣿⣿⣴⣿⣦⣼⣟⣠⣦⣄⣻⡇⣼⠇⣶⣬⣿⠁⣿⡇⢸⡿⢻⣿⡄⠀⠀⠀ ",
-"⠀⠀⠘⢿⣿⣿⣿⣷⣦⡞⢸⣿⡟⢿⣾⡿⣿⢦⡀⠀⠉⠉⠉⠉⠛⠛⠛⠛⠻⠿⠿⢶⣬⣥⣿⣇⣾⠹⡗⠄⠀⠀ ",
-"⠀⠀⠀⠀⠙⠻⣿⣿⣿⡅⡿⠀⢧⠘⣇⣷⣝⣆⠉⠒⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀⢸⡿⣁⣼⣿⣿⣠⢸⣆⠀⠀ ",
-"⠀⠀⠀⠀⠀⠀⠀⠉⢻⡙⢷⡀⠈⠳⣿⡁⢻⣿⣷⡒⠀⠀⣿⠉⠉⣻⡏⠀⠀⠤⣴⣿⣟⡿⠋⣾⠛⣿⡜⣽⠀⠀ ",
-"⠀⠀⠀⠀⠀⠀⠀⡴⠋⠙⠶⣯⣀⡞⣁⡙⢻⣿⣿⣿⣦⣄⡀⠒⠒⠚⢀⣠⣴⣿⣯⣽⣋⣤⡾⠳⣴⣿⠿⢇⠀⠀ ",
-"⠀⠀⠀⠀⠀⢠⠃⠀⠀⠀⠀⢀⠭⡉⡿⠋⢹⣌⣿⣏⠻⣿⣷⣶⣿⣿⠋⢙⣿⡀⠀⢙⡏⠀⢠⠞⠙⣗⠢⡉⠀ ",
-"⠀⠀⠀⠀⠀⠀⠸⠀⢇⠀⠃⠀⠸⡀⠈⢇⠀⡇⠙⣿⣽⠤⡉⣛⣟⢋⡇⡴⢫⡾⢿⠀⢸⠀⡔⠁⡠⠀⠀⠇⠘⡆ ",
-"⠀⠀⠀⠀⠀⠀⢰⡇⠈⠂⢸⠶⡀⠑⣄⠘⡄⠘⣶⠟⠻⣦⣆⣠⣀⣀⣻⣷⠏⠀⢸⠀⠘⠴⢥⣎⣀⠔⣁⡴⠘⡏ ",
-"⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠹⠄⠜⠢⣈⡦⠗⠀⠸⢴⡶⡇⠈⠀⠙⠁⠠⢿⣦⠀⠈⠳⠄⣀⠀⠉⠉⠉⠀⣄⡜⠁ ",
-" NYANSEC OS v1.0","",
-      { text: 'Loading kernel...' },
-        { text: 'Detecting devices...' },
-        { text: 'Mounting /home/felis...' },
-        { text: 'Starting shell...' }
-      ];
-
-      const bootLines = bootArt.map(line => typeof line === 'string' ? { text: line, pause: 100 } : line);
-
-      typeTransition(bootLines, () => {
-        document.getElementById('terminal').style.display = 'block';
-        toggleBtn.style.display = 'inline-block';
-        createPrompt();
-      }, 250);
-    };
-  </script>
+  <!-- Main JavaScript logic -->
+  <script src="main.js"></script>
 </body>
 </html>
-
-
-
-
