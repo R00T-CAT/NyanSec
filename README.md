@@ -76,6 +76,7 @@ Runs on any modern browser. Even runs on your fridge if it has Chrome.
 - More silly apps
 - A boot-up sequence that looks more catty
 - Smarter terminal with more "fake Linux" commands
+- Either new icons or background change for visibility
 
 
 ------------------------------------------------------------
